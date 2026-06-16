@@ -1,3 +1,8 @@
 *.idea*
 *.DS_Store*
-*postgres-data*
+*postgres-data
+roadmap.md
+
+# exercise 1
+Exercises/Exercise-1/downloads/*
+

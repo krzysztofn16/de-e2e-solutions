@@ -50,3 +50,54 @@ the `zip` file.
 1. Don't assume all the uri's are valid.
 2. One approach would be the `Python` method `split()` to retrieve filename for uri,
 or maybe find the last occurrence of `/` and take the rest of the string.
+
+### What I Have Done
+
+- Created a Python downloader in `main.py`.
+- Added automatic creation of the `downloads` directory.
+- Extracted original filenames from the URLs.
+- Downloaded files asynchronously with `aiohttp`.
+- Added a concurrency limit with `asyncio.Semaphore`.
+- Added an optional progress bar with `tqdm`.
+- Added basic logging and download summary output.
+- Added ZIP extraction and cleanup of ZIP files and `__MACOSX` folders.
+- Added a Click CLI with options for progress display, concurrency, and output directory.
+- Added Docker support with `Dockerfile`, `docker-compose.yml`, and `.dockerignore`.
+- Added `uv` project files: `pyproject.toml`, `uv.lock`, and `.python-version`.
+
+### Requirements
+
+- Python 3.13 with `uv`, or
+- Docker
+
+### Run Locally
+From this directory:
+```bash
+cd Exercises/Exercise-1
+uv sync
+uv run main.py
+```
+Useful options:
+```bash
+uv run main.py --no-tqdm --concurrency 5 --download-dir downloads
+```
+### Run With Docker
+Build the image:
+```bash
+cd Exercises/Exercise-1
+docker build --tag exercise-1 .
+```
+Run the downloader:
+```bash
+docker run --rm -v "$PWD:/app" exercise-1
+```
+Example with custom options:
+```bash
+docker run --rm -v "$PWD:/app" exercise-1 --no-tqdm --concurrency 5
+```
+### Output
+Downloaded and extracted CSV files are saved in:
+```text
+downloads/
+```
+Invalid URLs are logged as failures and skipped, so the script can continue downloading the remaining files.
